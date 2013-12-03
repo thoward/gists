@@ -90,6 +90,9 @@ def handle_post(args):
     return (public, args.filenames, args.input_dir, args.description,
             utils.GithubFacade(args.user, get_credentials(args)))
 
+def handle_clone(args):
+    """ Handle the arguments to call the 'clone' gists functionality. """
+    return args.gist_id, args.output_dir, utils.GithubFacade()
 
 def handle_show(args):
     """ Handle the arguments to call the 'show' gists functionality. """

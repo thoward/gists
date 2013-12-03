@@ -23,6 +23,7 @@
 # Github API response, and handles errors and responses.
 
 from utils import download, build_result, GistsConfigurer
+from subprocess import call
 import literals
 import model
 import os
@@ -121,6 +122,35 @@ def get(gist_id, requested_file, destination_dir, facade):
     else:
         # Handle GitHub response error
         result = build_result(False, literals.DOWNLOAD_ERROR,
+                              response.json['message'])
+
+    return result
+
+def clone(gist_id, destination_dir, facade):
+    """ Clone a gist repo.
+
+    Clones a gist repo by shelling out to git clone.
+
+    :param gist_id: identifier of the gist to download
+    :param destination_dir: destination directory after the download
+    :param facade: instance of the object that actually perform the request
+    """
+
+    # Get the gist information
+    response = facade.request_gist(gist_id)
+
+    if response.ok:
+        params = ["git", "clone", "git@github.com:" + gist_id +".git"]
+        if destination_dir and destination_dir != ".":
+            params.append(destination_dir)
+        exit_code = call(params)
+        if not exit_code:
+            result = build_result(True, literals.CLONE_OK, gist_id)
+        else:
+            result = build_result(False, literals.CLONE_ERROR, "Exit code: %s" % (exit_code))
+    else:
+        # Handle GitHub response error
+        result = build_result(False, literals.CLONE_ERROR,
                               response.json['message'])
 
     return result

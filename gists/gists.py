@@ -30,13 +30,13 @@ and coordinates the 'handlers'->'actions'->'formatters' execution workflow
 """
 
 import argparse
-from actions import (list_gists, show, get, post, delete, update, authorize,
+from actions import (list_gists, clone, show, get, post, delete, update, authorize,
                      fork, star, unstar)
-from handlers import (handle_list, handle_show, handle_update,
+from handlers import (handle_list, handle_clone, handle_show, handle_update,
                       handle_authorize, handle_get, handle_post, handle_delete,
                       handle_fork, handle_star)
 from formatters import (format_list, format_post, format_update,
-                        format_get, format_show, format_delete,
+                        format_get, format_clone, format_show, format_delete,
                         format_authorize, format_star)
 from version import VERSION
 
@@ -60,6 +60,7 @@ def run(*args, **kwargs):
 
     # Add the subparsers
     __add_list_parser(subparsers)
+    __add_clone_parser(subparsers)
     __add_show_parser(subparsers)
     __add_get_parser(subparsers)
     __add_create_parser(subparsers)
@@ -107,6 +108,19 @@ def __add_list_parser(subparsers):
     parser_list.set_defaults(handle_args=handle_list,
                              func=list_gists, formatter=format_list)
 
+def __add_clone_parser(subparsers):
+    """ Define the subparser to handle with the 'clone' functionallity.
+
+    :param subparsers: the subparser entity
+    """
+    # Add the subparser to handle the 'show' action
+    parser_clone = subparsers.add_parser("clone", help="""clone a Gist.
+                                        """)
+    parser_clone.add_argument("gist_id", help=GIST_ID_MSG)
+    parser_clone.add_argument("-o", "--output_dir", help="destination directory",
+                            default=".")
+    parser_clone.set_defaults(handle_args=handle_clone, func=clone,
+                             formatter=format_clone)
 
 def __add_show_parser(subparsers):
     """ Define the subparser to handle with the 'show' functionallity.

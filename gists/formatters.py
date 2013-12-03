@@ -33,7 +33,18 @@ the output legible, clear and pretty (using the usefull 'clint' package)
 
 
 """
+def format_clone(result):
+    """ Formats the output of the 'clone' action.
 
+    :param result: Result instance
+    """
+
+    if result.success:
+        # The result is just a string informing the success
+        return result.data
+    else:
+        # Format the error string message
+        return __format_error(result.data)
 
 def format_show(result):
     """ Formats the output of the 'show' action.

@@ -33,6 +33,8 @@ APP_URL = "https://github.com/jdevesa/gists"
 
 LISTS_ERROR = "Can not return the list of gists. Github reason: '%s'"
 
+CLONE_OK = "Gist '%s' cloned successfully!"
+
 DOWNLOAD_OK = "File '%s' downloaded successfully!"
 
 DOWNLOAD_MORE_FILES = ("Gist has more than one file. "
@@ -42,6 +44,8 @@ DOWNLOAD_MORE_FILES = ("Gist has more than one file. "
 FILE_NOT_FOUND = ("File not found in gist. Available values are [%s])")
 
 DOWNLOAD_ERROR = "Can not download gist file. Github reason: '%s'"
+
+CLONE_ERROR = "Can not clone gist. Github reason: '%s'"
 
 SHOW_ERROR = "Can not show gist file. Github reason: '%s'"
 
